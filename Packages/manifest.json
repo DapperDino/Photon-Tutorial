@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.unity.cinemachine": "2.3.4",
     "com.unity.package-manager-ui": "2.2.0",
     "com.unity.textmeshpro": "2.0.1",
     "com.unity.ugui": "1.0.0",

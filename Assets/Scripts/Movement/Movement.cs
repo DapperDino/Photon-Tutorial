@@ -9,8 +9,13 @@ namespace PhotonTutorial.Movement
         [SerializeField] private float movementSpeed = 0f;
 
         private CharacterController controller = null;
+        private Transform mainCameraTransform = null;
 
-        private void Start() => controller = GetComponent<CharacterController>();
+        private void Start()
+        {
+            controller = GetComponent<CharacterController>();
+            mainCameraTransform = Camera.main.transform;
+        }
 
         void Update()
         {
@@ -29,7 +34,23 @@ namespace PhotonTutorial.Movement
                 z = Input.GetAxisRaw("Vertical"),
             }.normalized;
 
-            controller.SimpleMove(movement * movementSpeed);
+            Vector3 forward = mainCameraTransform.forward;
+            Vector3 right = mainCameraTransform.right;
+
+            forward.y = 0f;
+            right.y = 0f;
+
+            forward.Normalize();
+            right.Normalize();
+
+            Vector3 calculatedMovement = (forward * movement.z + right * movement.x).normalized;
+
+            if (calculatedMovement != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(calculatedMovement);
+            }
+
+            controller.SimpleMove(calculatedMovement * movementSpeed);
         }
     }
 }

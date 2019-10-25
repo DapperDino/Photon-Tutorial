@@ -1,5 +1,4 @@
-﻿using System;
-using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
 
 namespace PhotonTutorial.Weapons
@@ -22,14 +21,13 @@ namespace PhotonTutorial.Weapons
         {
             if (!Input.GetMouseButtonDown(0)) { return; }
 
-            photonView.RPC("FireProjectile", RpcTarget.All);
+            FireProjectile();
         }
 
-        [PunRPC]
         private void FireProjectile()
         {
-            var projectileInstance = Instantiate(
-                projectile,
+            var projectileInstance = PhotonNetwork.Instantiate(
+                projectile.name,
                 spawnPoint.position,
                 spawnPoint.rotation
             );
